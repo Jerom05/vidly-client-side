@@ -3,10 +3,10 @@ import { NavLink,Link } from 'react-router-dom'
 
 const NavBar = ({user})=>{
     console.log('Navbar user iformation:',user)
-    const logOut = (props)=>{
-        localStorage.removeItem('token')
-        window.location ='/'
-    }
+    // const logOut = (props)=>{
+    //     localStorage.removeItem('token')
+    //     window.location ='/'
+    // }
     return(
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <Link className="navbar-brand" to="/">
@@ -44,4 +44,3 @@ const NavBar = ({user})=>{
 
 export default NavBar
 
-//

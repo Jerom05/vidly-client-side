@@ -1,5 +1,5 @@
 import axios from "axios";
-import auth from "./authService"
+//import auth from "./authService"
 
 axios.defaults.headers.common["x-auth-token"] = localStorage.getItem("token")
 

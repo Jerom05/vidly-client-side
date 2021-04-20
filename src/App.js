@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import jwtDecode from 'jwt-decode'
+//import jwtDecode from 'jwt-decode'
 import auth from './services/authService'
 import Customers from './components/customers';
 import LoginForm from './components/loginForm';
@@ -16,7 +16,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 function App() {
 
   const [state,setState] = useState({})
-  const user = state.user
+  //const user = state.user
   
   useEffect(()=>{
     try{

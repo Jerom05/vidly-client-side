@@ -24,7 +24,9 @@ class LoginForm extends Form {
       await auth.login(data.username, data.password)
       //localStorage.setItem("token",res.data)
       //console.log('login form: login information', res.data)
-      window.location = '/'
+      //window.location = '/'
+      const {state} = this.props.location
+      window.location = state? state.from.pathname : '/'
     }
     
     catch(ex){
