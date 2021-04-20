@@ -3,9 +3,10 @@ import MoviesTable from "./moviesTable";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
-import { getMovies, deleteMovie } from "../services/fakeMovieService";
-import { getGenres } from "../services/fakeGenreService";
+import { getMovies, deleteMovie } from "../services/movieService";
+import { getGenres } from "../services/genreService";
 import _ from "lodash";
+import { Link} from 'react-router-dom'
 
 class Movies extends Component {
   state = {
@@ -18,19 +19,23 @@ class Movies extends Component {
     sortColumn: { path: "title", order: "asc" }
   };
 
-  componentDidMount() {
-    const genres = [{name: "All Genres"},...getGenres()]
-    this.setState({
-      movies:getMovies(),
-      genres
-    })
+  async componentDidMount() {
+    console.log('text')
+    const {data}  = await getGenres();
+
+
+    const genres = [{ _id: "", name: "All Genres" }, ...data];
+
+    const { data: movies } = await getMovies();
+    this.setState({ movies, genres });
   }
 
-  handleDelete = movie => {
+  handleDelete =async movie => {
     const movies = this.state.movies.filter(m => m._id !== movie._id);
     this.setState({ movies });
 
-    deleteMovie(movie._id);
+    const d= await deleteMovie(movie._id);
+    console.log(d.response)
   };
 
   handleLike = movie => {
@@ -63,7 +68,6 @@ class Movies extends Component {
       currentPage,
       sortColumn,
       selectedGenre,
-      searchQuery,
       movies: allMovies
     } = this.state;
 
@@ -78,11 +82,12 @@ class Movies extends Component {
 
     return { totalCount: filtered.length, data: movies };
   };
+  
 
   render() {
     const { length: count } = this.state.movies;
     const { pageSize, currentPage, sortColumn } = this.state;
-
+    const {user} = this.props
 
     if (count === 0) return <p>There are no movies in the database.</p>;
 
@@ -98,6 +103,16 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
+          {user &&(
+              <Link
+              to="/movies/new"
+              className="btn btn-primary"
+              style={{ marginBottom: 20 }}
+            >
+              New Movie
+            </Link>
+          )}
+      
           <p>Showing {totalCount} movies in the database.</p>
           <MoviesTable
             movies={movies}
@@ -115,7 +130,7 @@ class Movies extends Component {
         </div>
       </div>
     );
-  }
+  }  
 }
 
 export default Movies;
