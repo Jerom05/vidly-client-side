@@ -34,7 +34,7 @@ function getJwt(){
     return localStorage.getItem('token')
 }
 
-export {
+export default {
     login,
     loginWithJwt,
     logout,
